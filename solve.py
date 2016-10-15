@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import math
+import sys
 from itertools import product
 from itertools import permutations
 from copy import deepcopy
@@ -480,6 +481,11 @@ class BTree:
 
 ###Main program
 known24s = []
+if len(sys.argv) == 5:
+    operands[0] = sys.argv[1]
+    operands[1] = sys.argv[2]
+    operands[2] = sys.argv[3]
+    operands[3] = sys.argv[4]
 nums=sorted(operands)
 ops=operators
 opSeqs = genOpSeq(ops)
