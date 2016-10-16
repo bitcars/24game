@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import math
 import sys
+from types import *
 from itertools import product
 from itertools import permutations
 from copy import deepcopy
@@ -480,29 +481,56 @@ class BTree:
     assert(is24(self.nodes[0].value()))
 
 ###Main program
-known24s = []
-if len(sys.argv) == 5:
-    operands[0] = sys.argv[1]
-    operands[1] = sys.argv[2]
-    operands[2] = sys.argv[3]
-    operands[3] = sys.argv[4]
-nums=sorted(operands)
-ops=operators
-opSeqs = genOpSeq(ops)
-numSeqs = genNumSeq(nums)
-for opSeq in opSeqs:
-  for numSeq in numSeqs:
-    polishSeqs = genPolish(numSeq, opSeq)
-    for polishExp in polishSeqs:
-      if (is24(evalPolishExp(polishExp))):
-        tree = BTree(polishExp)
-        assert (tree.genPolish()==polishExp)
-        tree.regulate()
-        polishExp = tree.genPolish()
-        assert(is24(evalPolishExp(polishExp)))
-        if (polishExp not in known24s):
-          known24s.append(polishExp)
-          print(len(known24s),polishExp,genSolvStr(polishExp))
-          printPolish(polishExp)
-if not known24s:
-  print("No solution found")
+runOnce = False
+#if len(sys.argv) == 5:
+#    operands[0] = sys.argv[1]
+#    operands[1] = sys.argv[2]
+#    operands[2] = sys.argv[3]
+#    operands[3] = sys.argv[4]
+#    runOnce = True
+#for num in operands:
+#    print type(num)
+#    if type(num) is not IntType:
+#        runOnce = False
+#        break
+#print(runOnce)
+while (True):
+    if not runOnce :
+        line = raw_input("Input 4 numbers: ")
+        if len(line) == 0:
+            break
+        lineList = line.split()
+        if len(lineList) != 4:
+            print("Expecting 4 numbers")
+            continue
+        i = 0
+        for num in lineList:
+            if num.isdigit():
+                operands[i] = num
+                i+=1
+            else:
+                print("Expecting 4 numbers")
+                continue
+    nums=sorted(operands)
+    known24s = []
+    ops=operators
+    opSeqs = genOpSeq(ops)
+    numSeqs = genNumSeq(nums)
+    for opSeq in opSeqs:
+      for numSeq in numSeqs:
+        polishSeqs = genPolish(numSeq, opSeq)
+        for polishExp in polishSeqs:
+          if (is24(evalPolishExp(polishExp))):
+            tree = BTree(polishExp)
+            assert (tree.genPolish()==polishExp)
+            tree.regulate()
+            polishExp = tree.genPolish()
+            assert(is24(evalPolishExp(polishExp)))
+            if (polishExp not in known24s):
+              known24s.append(polishExp)
+              print(len(known24s),polishExp,genSolvStr(polishExp))
+              printPolish(polishExp)
+    if not known24s:
+        print("No solution found")
+    if runOnce:
+        break
