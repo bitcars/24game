@@ -51,7 +51,7 @@ def eq( a, b, eps=0.0001 ):
 
 def is24( num ):
   return eq(num, 24)
-  
+
 def evalPolishExp(polishexp):
   stack = []
   for op in polishexp:
@@ -364,7 +364,7 @@ class BTree:
     exp = []
     for p in polish:
       exp.append(p.name)
-    return exp 
+    return exp
 
   def genPolish(self):
     polish = []
@@ -402,7 +402,7 @@ class BTree:
           break
 
     assert(is24(self.nodes[0].value()))
-    
+
     #Form a left unbalanced tree
     moved=True
     while (moved):
